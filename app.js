@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const Logger = require('./library/Logging');
+const Logger = require('./library/Logger');
 const productRouter = require('./routes/productsRouter');
 const customerRouter = require('./routes/customerRouter');
 const orderRouter = require('./routes/orderRouter');
@@ -26,8 +26,6 @@ app.use(`${api}/users`, userRouter);
 
 
 mongoose.connect(process.env.MONGO_URL,{
-	// useNewUrlParser:true,
-	// useUnifiedTopology: true,
 	dbName: "eshop"
 })
 	.then(() => {
