@@ -1,6 +1,5 @@
 const Category = require('../model/categoryModel');
 
-// get all categories
 const allCategories = async (req,res) => {
 	try {
 		const categoryLists = await Category.find();
@@ -8,10 +7,9 @@ const allCategories = async (req,res) => {
 	} catch (error) {
 		res.status(500).json({ success: false, error: error.message });
 	}
-	// res.status(200).send(categoryLists)
 }
 
-// category creation
+
 const categoryCreation = async (req,res) => {
 	const { name, icon, color, image } = req.body;
 
