@@ -1,5 +1,5 @@
 const Product = require('../model/productsModel');
-const Logger = require('../library/Logging')
+const Logger = require('../library/Logger')
 
 
 const allProducts = async (req,res) => {
