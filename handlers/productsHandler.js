@@ -1,16 +1,17 @@
 const Product = require('../model/productsModel');
+const Logger = require('../library/Logging')
 
 
 const allProducts = async (req,res) => {
-	const productsList = await Product.find();
-
-	if(!productsList) {
-		return res.status(500).json({success:false})
+	try {
+		const productsList = await Product.find();
+		res.status(200).send(productsList);
+	} catch (error) {
+		res.status(500).send(productsList)
 	}
-	res.status(200).send(productsList);
 }
 
-// get all products posted by a specific user
+
 const productsByUserId = async (req,res) => {
 	const userId = req.params.userId;
 
@@ -23,11 +24,6 @@ const productsByUserId = async (req,res) => {
 }
 
 
-// posting products by a specific user
-// const productsCreation = async , authUser(req,res) => {
-// 	const userId = req.user._id
-// }
-
 const productsCreation = async(req,res) => {
 	const userId = req.user._id;
 
@@ -39,12 +35,13 @@ const productsCreation = async(req,res) => {
 			price: req.body.price,
 			user: userId,
 		});
-		console.log(product)
+		Logger.info(product)
 		product
 		.save()
+		res.status(200).json(product);
 
 	} catch (err) {
-		console.log(err)
+		Logger.error(err)
 		res.status(500).json({
 			error: err,
 			message: 'Faied to create products',
