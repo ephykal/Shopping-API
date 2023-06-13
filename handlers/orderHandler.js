@@ -1,15 +1,13 @@
-const logger = require('../library/Logging');
+const Logger = require('../library/Logging');
 const Order = require('../model/orderModel');
 
 const allOrders = async (req,res) => {
-	const orderLists = await Order.find();
-
-	if(!orderLists) {
-		res.status(500).json({error:logger.error('Internal server error order lidt cant be found'),
-		success:false
-		})
-	};
-	res.status(200).send(orderLists)
+	try {
+		const orderList = await Order.find();
+		res.status(200).send(orderList);
+	} catch (error) {
+		res.status(500).send({success:false, err:error.message})
+	}
 }
 
 const orderCreation = async (req,res) => {
@@ -22,7 +20,7 @@ const orderCreation = async (req,res) => {
 		.then((createdOrder) => {res.status(201).json(createdOrder)})
 		.catch((err) => {
 			res.status(500).json({
-				errror: logger.error('Internal server error unabele to create order'),
+				errror: Logger.error('Internal server error unabele to create order'),
 				success:false
 			})
 		})
