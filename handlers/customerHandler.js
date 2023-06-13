@@ -1,12 +1,12 @@
 const Customer = require('../model/customerModel');
 
 const allCustomer = async (req,res) => {
-	const customerList = await Customer.find();
-
-	if(!customerList){
-		return res.status(500).json({success:false})
+	try {
+		const customerList = await Customer.find();
+		res.status(200).send(customerList)
+	} catch (error) {
+	res.status(500).send({success:false, err:error.message})
 	}
-	res.status(200).send(customerList)
 }
 
 // creation of customers
