@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// creating order schema
 const orderSchema = new mongoose.Schema({
 	orderItems: [],
 	shippingAddress1:String,
