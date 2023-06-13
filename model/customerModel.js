@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
-// creating customer schema
 const customerSchema = new mongoose.Schema({
 	name:{
 		type: String,
