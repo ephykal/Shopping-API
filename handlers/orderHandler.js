@@ -1,4 +1,4 @@
-const Logger = require('../library/Logging');
+const Logger = require('../library/Logger');
 const Order = require('../model/orderModel');
 
 const allOrders = async (req,res) => {
@@ -12,19 +12,18 @@ const allOrders = async (req,res) => {
 
 const orderCreation = async (req,res) => {
 	const { orderItems, shippingAddress1, shippingAddress2, status, city, zip, country, phoneNo } = req.body
-	
-	const order = new Order({ orderItems, shippingAddress1, shippingAddress2, status, city, zip, country, phoneNo })
 
-	await order
-		.save()
-		.then((createdOrder) => {res.status(201).json(createdOrder)})
-		.catch((err) => {
-			res.status(500).json({
-				errror: Logger.error('Internal server error unabele to create order'),
-				success:false
-			})
+	try {
+		const order = new Order({orderItems, shippingAddress1, shippingAddress2, status, city, zip, country, phoneNo});
+
+		const createdOrder = await order.save();
+		res.status(201).json({createdOrder})
+	} catch (error) {
+		res.status(500).json({
+			errror: Logger.error('Internal server error unabele to create order'),
+			success:false
 		})
-
+	}
 }
 
 
