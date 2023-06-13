@@ -9,7 +9,6 @@ const allCustomer = async (req,res) => {
 	}
 }
 
-// creation of customers
 const customerCreation = async (req,res) => {
 	const { name, email, password } = req.body;
 
@@ -18,14 +17,11 @@ const customerCreation = async (req,res) => {
 			name, email, password
 		})
 
-		await customer
-			.save()
-			.then((createdCustomer) => {
-				res.status(201).json({createdCustomer})
-			})
+		const createdCustomer = await customer.save();
+		res.status(201).json({createdCustomer});
 		
 	} catch (error) {
-		res.status(500).json({error:'customer can\'t be created', success:false})	
+		res.status(500).json({error:'customer can not  be created', success:false})	
 	}
 }
 
