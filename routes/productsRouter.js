@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const authUser = require('../middleware/authUser');
-const { allProducts, productsByUserId, productsCreation } = require('../handlers/productsHandler');
+const {allProductsHandler, productsByUserIdHandler, productCreationHandler} = require('../handlers/productsHandler');
+
+router.get('/',allProductsHandler);
+router.get('/users/:userId', productsByUserIdHandler);
+router.post('/', productCreationHandler)
 
 
-router.get('/', allProducts);
-router.get('/user/:userId', productsByUserId);
-router.post('/', authUser, productsCreation);
+module.exports = router;
 
 
-module.exports = router
