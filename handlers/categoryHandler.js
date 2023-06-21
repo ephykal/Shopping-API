@@ -1,29 +1,13 @@
-const Category = require('../model/categoryModel');
+const {allCategoryMiddlware, categoryCreationMiddleware} = require('../middleware/categoryMiddleware');
 
-const allCategories = async (req,res) => {
-	try {
-		const categoryLists = await Category.find();
-		res.status(200).send(categoryLists)
-	} catch (error) {
-		res.status(500).json({ success: false, error: error.message });
-	}
-}
+const allCategoryHandler = [allCategoryMiddlware, async(req,res)=>{
+	const categoryLists = res.locals.categoryLists;
+	res.status(200).send(categoryLists)
+}]
 
+const categoryCreationHandler = [categoryCreationMiddleware, async(req,res) => {
+	const createdCategory = res.locals.createdCategory;
+	res.status(200).json(createdCategory);
+}]
 
-const categoryCreation = async (req,res) => {
-	const { name, icon, color, image } = req.body;
-
-	try {
-		const category = new Category({
-			name, icon, image, color
-		})
-
-		const createdCategory = await category.save();
-	  res.status(201).json({createdCategory});
-		
-	} catch (error) {
-		res.status(500).json({error:'category can\'t be created', success:false})	
-	}
-}
-
-module.exports = { allCategories, categoryCreation }
+module.exports = {allCategoryHandler, categoryCreationHandler}
