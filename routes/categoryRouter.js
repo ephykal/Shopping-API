@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { allCategories, categoryCreation } = require('../handlers/categoryHandler');
+const { allCategoryHandler, categoryCreationHandler } = require('../handlers/categoryHandler');
 
 
-router.get('/', allCategories);
-router.post('/', categoryCreation);
+router.get('/', allCategoryHandler);
+router.post('/', categoryCreationHandler);
 
 
 module.exports = router;
